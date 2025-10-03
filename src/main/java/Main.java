@@ -49,7 +49,7 @@ public class Main extends Application {
             System.out.println("=========== MENU DE CODIGO MORSE ===========");
             System.out.println("1. Digite '1' para codificar um texto em morse");
             System.out.println("2. Digite '2' para decodificar um morse em texto");
-            System.out.println("3. Digite '3' para sair");
+            System.out.println("3. Digite '3' para sair e exibir a árvore");
             opcao = sc.nextInt();
             sc.nextLine();
 
@@ -138,7 +138,6 @@ public class Main extends Application {
 
                     System.out.println("Morse decodificado: " + resultado);
                     break;
-
 
 
                 case 3:
