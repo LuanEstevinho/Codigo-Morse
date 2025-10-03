@@ -3,50 +3,44 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class ArvoreMorse {
-    private NoMorse raiz;
+    private NoMorse raiz; // nó raiz, primeiro nó da arvore morse
 
     public ArvoreMorse() {
-        this.raiz = new NoMorse(' '); // raiz "vazia"
+
+        this.raiz = new NoMorse(' '); // raiz sendo definida como "vazia"
     }
 
-    // Inserção recursiva
+    // metodo para inserir com recursividade
     public void inserir(char letra, String codigo) {
+
         raiz = inserirRec(raiz, letra, codigo, 0);
     }
 
     private NoMorse inserirRec(NoMorse node, char letra, String codigo, int index) {
         if (node == null) {
-            node = new NoMorse(' ');
+            node = new NoMorse(' '); // se o valor do nó for nulo, ele cria um nó vazio para caminho
         }
         if (index == codigo.length()) {
-            node.letra = letra;
-            return node;
+            node.letra = letra; // se ele ja tiver percorrido td o codigo, atribui a letra do node = letra param
+            return node; // retorna o node com a letra definida
         }
 
-        char c = codigo.charAt(index);
+        char c = codigo.charAt(index); // metodo para acessar char especifico
         if (c == '.') {
+            // se for um '.' vai inserir no nó atual um novo nó da esquerda (apenas um caminho)
             node.esquerda = inserirRec(node.esquerda, letra, codigo, index + 1);
         } else if (c == '-') {
+            // mesma logica porém para a direita
             node.direita = inserirRec(node.direita, letra, codigo, index + 1);
         }
+        // retorna o nó
         return node;
     }
 
-    // Decodificação
+    // metodo para decodificar com recursividade
     public char decodificar(String codigo) {
-        NoMorse node = raiz;
-        for (char c : codigo.toCharArray()) {
-            if (c == '.') {
-                node = node.esquerda;
-            }
-            else if (c == '-') {
-                node = node.direita;
-            }
-            if (node == null) {
-                return '?'; // inválido
-            }
-        }
-        return node.letra;
+        // chama decodificarRec() passando nó raiz, para começar, o codigo do param e index 0 para varrer o cod
+        return decodificarRec(raiz, codigo, 0);
     }
 
     public char decodificarRec(NoMorse node, String codigo, int index) {
@@ -54,11 +48,9 @@ public class ArvoreMorse {
             return '?';
         }
         if (index == codigo.length()) {
-            System.out.println("Código " + codigo + " decodificado como: " + node.letra); // mostra o codigo decodificado
             return node.letra; // quando terminar de varrer o codigo, retorna a letra que estava no node
         }
         char c = codigo.charAt(index); // mesmo metodo de cima ali
-        System.out.println("Caminho '"+ codigo.substring(0, index) + "' -> Letra: " + node.letra); // mostra o caminho percorrido e a letra atual do nó
         if (c == '.') {
             // apenas desce mais para a esquerda na arvore
             return decodificarRec(node.esquerda, codigo, index + 1);
@@ -74,25 +66,29 @@ public class ArvoreMorse {
 
     // metodo para codificar com recursividade
     public String codificar(char letra) {
+
         return codificarRec(raiz, letra, "");
     }
 
     private String codificarRec(NoMorse node, char letra, String caminho) {
         if (node == null) {
-            return null;
+            return null; // para indicar que nesse caminho não tem um no valido
         }
         if (node.letra == letra) {
-            System.out.println("Letra " + letra + " codificada como: " + caminho); // mostra letra por letra codificando
+            System.out.println("Letra '" + letra + "' codificada como: " + caminho); // printa letra por letra 
             return caminho; // se a letra do node for igual a letra do param, retorna o caminho feito
         }
 
         String esq = codificarRec(node.esquerda, letra, caminho + ".");
         if (esq != null) {
-            return esq;
+            // se na subarvore esquerda ele achou um caminho valido (nao null), significa que achou a letra
+            return esq; // retorna ela
         }
 
+        // se nao achou na esquerda vai pra direita -> '-'
         return codificarRec(node.direita, letra, caminho + "-");
     }
+
 
     // Altura da árvore
     public int getAltura() {
@@ -132,5 +128,9 @@ public class ArvoreMorse {
             gc.strokeLine(x, y + 15, newX, newY - 15);
             desenharNo(gc, node.direita, newX, newY, offset / 2);
         }
+    }
+
+    public boolean estaVazia() {
+        return raiz == null || (raiz.letra == ' ' && raiz.esquerda == null && raiz.direita == null);
     }
 }
