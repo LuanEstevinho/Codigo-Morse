@@ -8,12 +8,14 @@ public class ArvoreMorse {
     public ArvoreMorse() {
 
         this.raiz = new NoMorse(' '); // raiz sendo definida como "vazia"
+        //print novo no - System.out.println("Criando nó raiz vazio");
     }
 
     // metodo para inserir com recursividade
     public void inserir(char letra, String codigo) {
-
+        //print iniciando insercao
         raiz = inserirRec(raiz, letra, codigo, 0);
+        //print insercao concluida
     }
 
     private NoMorse inserirRec(NoMorse node, char letra, String codigo, int index) {
@@ -22,14 +24,17 @@ public class ArvoreMorse {
         }
         if (index == codigo.length()) {
             node.letra = letra; // se ele ja tiver percorrido td o codigo, atribui a letra do node = letra param
+            //print inserindo letra -> System.out.println("Inserindo letra '" + letra + "' no código: " + codigo);
             return node; // retorna o node com a letra definida
         }
 
         char c = codigo.charAt(index); // metodo para acessar char especifico
         if (c == '.') {
+            //print inserindo no -> System.out.println("Inserindo nó à esquerda de '" + node.letra + "'");
             // se for um '.' vai inserir no nó atual um novo nó da esquerda (apenas um caminho)
             node.esquerda = inserirRec(node.esquerda, letra, codigo, index + 1);
         } else if (c == '-') {
+            //print inserindo no -> System.out.println("Inserindo nó à direita de '" + node.letra + "'");
             // mesma logica porém para a direita
             node.direita = inserirRec(node.direita, letra, codigo, index + 1);
         }
@@ -48,6 +53,7 @@ public class ArvoreMorse {
             return '?';
         }
         if (index == codigo.length()) {
+            //System.out.println("Código '" + codigo + "' decodificado como: " + node.letra);
             return node.letra; // quando terminar de varrer o codigo, retorna a letra que estava no node
         }
         char c = codigo.charAt(index); // mesmo metodo de cima ali

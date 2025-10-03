@@ -119,6 +119,7 @@ public class Main extends Application {
 
                                 // se letraMorse nao estiver vazio significa que terminou uma letra e codifica
                                 char letra = arvore.decodificar(letraMorse);
+                                System.out.println("Código '" + letraMorse + "' → Letra '" + letra + "'");
 
                                 resultado += letra; // coloca a letra decodificada em resultado
 
@@ -133,6 +134,8 @@ public class Main extends Application {
                     // se tiver mais letrar vai decodificando tb
                     if (!letraMorse.equals("")) {
                         char letra = arvore.decodificar(letraMorse);
+                        System.out.println("Código '" + letraMorse + "' → Letra '" + letra + "'");
+
                         resultado += letra;
                     }
 
