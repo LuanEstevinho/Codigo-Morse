@@ -1,6 +1,7 @@
 public class NoMorse {
     char letra;
-    NoMorse esquerda, direita;
+    NoMorse esquerda;
+    NoMorse direita;
 
     public NoMorse(char letra) {
         this.letra = letra;
