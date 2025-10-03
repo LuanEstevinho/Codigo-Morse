@@ -56,8 +56,18 @@ public class Main extends Application {
 
             switch (opcao) {
                 case 1:
+                    if (arvore.estaVazia()){
+                        System.out.println("Árvore vazia, não é possivel codificar");
+                        break;
+                    }
+
                     System.out.println("Digite o texto que deseja codificar: ");
                     String texto = sc.nextLine().toUpperCase();
+
+                    if (!texto.matches("[A-Z ]+")) {
+                        System.out.println("Entrada invalida! Só letras A-Z e espaços são permitidos");
+                    }
+
 
                     String morse = "";
 
@@ -81,8 +91,18 @@ public class Main extends Application {
 
 
                 case 2:
+                    if (arvore.estaVazia()){
+                        System.out.println("Árvore vazia, não é possivel decodificar");
+                        break;
+                    }
+
                     System.out.println("Digite o codigo Morse para decodificar:");
                     String codigo = sc.nextLine().trim();
+
+                    if (!codigo.matches("[.\\-/ ]+")) {
+                        System.out.println("Entrada invalida! Só '.', '-', '/' e espaços sao permitidos");
+                    }
+                    
                     String letraMorse = ""; // para guardar o código de uma letra e decodificar uma por uma
                     String resultado = ""; // para guardar tudo junto e ter a palavra final
 

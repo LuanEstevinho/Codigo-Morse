@@ -128,4 +128,8 @@ public class ArvoreMorse {
             desenharNo(gc, node.direita, newX, newY, offset / 2);
         }
     }
+
+    public boolean estaVazia() {
+        return raiz == null || (raiz.letra == ' ' && raiz.esquerda == null && raiz.direita == null);
+    }
 }
