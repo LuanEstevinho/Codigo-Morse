@@ -49,7 +49,30 @@ public class ArvoreMorse {
         return node.letra;
     }
 
-    // Codificação
+    public char decodificarRec(NoMorse node, String codigo, int index) {
+        if (node == null) {
+            return '?';
+        }
+        if (index == codigo.length()) {
+            System.out.println("Código " + codigo + " decodificado como: " + node.letra); // mostra o codigo decodificado
+            return node.letra; // quando terminar de varrer o codigo, retorna a letra que estava no node
+        }
+        char c = codigo.charAt(index); // mesmo metodo de cima ali
+        System.out.println("Caminho '"+ codigo.substring(0, index) + "' -> Letra: " + node.letra); // mostra o caminho percorrido e a letra atual do nó
+        if (c == '.') {
+            // apenas desce mais para a esquerda na arvore
+            return decodificarRec(node.esquerda, codigo, index + 1);
+        }
+        else if (c == '-') {
+            // desce mais para a direita na arvore
+            return decodificarRec(node.direita, codigo, index + 1);
+        }
+        // retorna se o codigo nao for nem '.' nem '-'
+        return '?';
+    }
+
+
+    // metodo para codificar com recursividade
     public String codificar(char letra) {
         return codificarRec(raiz, letra, "");
     }
@@ -59,7 +82,8 @@ public class ArvoreMorse {
             return null;
         }
         if (node.letra == letra) {
-            return caminho;
+            System.out.println("Letra " + letra + " codificada como: " + caminho); // mostra letra por letra codificando
+            return caminho; // se a letra do node for igual a letra do param, retorna o caminho feito
         }
 
         String esq = codificarRec(node.esquerda, letra, caminho + ".");
