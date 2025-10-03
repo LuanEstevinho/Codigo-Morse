@@ -1,10 +1,10 @@
 public class NoMorse {
-    char letra;
+    char caracter;
     NoMorse esquerda;
     NoMorse direita;
 
-    public NoMorse(char letra) {
-        this.letra = letra;
+    public NoMorse(char caracter) {
+        this.caracter = caracter;
         this.esquerda = null;
         this.direita = null;
     }

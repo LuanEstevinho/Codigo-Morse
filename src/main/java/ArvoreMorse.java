@@ -3,17 +3,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class ArvoreMorse {
-    private NoMorse raiz; // nó raiz, primeiro nó da arvore morse
+    private NoMorse inicio; // nó inicio, primeiro nó da arvore morse
 
     public ArvoreMorse() {
 
-        this.raiz = new NoMorse(' '); // raiz sendo definida como "vazia"
+        this.inicio = new NoMorse(' '); // inicio sendo definida como "vazia"
     }
 
     // metodo para inserir com recursividade
     public void inserir(char letra, String codigo) {
 
-        raiz = inserirRec(raiz, letra, codigo, 0);
+        inicio = inserirRec(inicio, letra, codigo, 0);
     }
 
     private NoMorse inserirRec(NoMorse node, char letra, String codigo, int index) {
@@ -21,7 +21,7 @@ public class ArvoreMorse {
             node = new NoMorse(' '); // se o valor do nó for nulo, ele cria um nó vazio para caminho
         }
         if (index == codigo.length()) {
-            node.letra = letra; // se ele ja tiver percorrido td o codigo, atribui a letra do node = letra param
+            node.caracter = letra; // se ele ja tiver percorrido td o codigo, atribui a letra do node = letra param
             return node; // retorna o node com a letra definida
         }
 
@@ -39,8 +39,8 @@ public class ArvoreMorse {
 
     // metodo para decodificar com recursividade
     public char decodificar(String codigo) {
-        // chama decodificarRec() passando nó raiz, para começar, o codigo do param e index 0 para varrer o cod
-        return decodificarRec(raiz, codigo, 0);
+        // chama decodificarRec() passando nó inicio, para começar, o codigo do param e index 0 para varrer o cod
+        return decodificarRec(inicio, codigo, 0);
     }
 
     public char decodificarRec(NoMorse node, String codigo, int index) {
@@ -48,7 +48,7 @@ public class ArvoreMorse {
             return '?';
         }
         if (index == codigo.length()) {
-            return node.letra; // quando terminar de varrer o codigo, retorna a letra que estava no node
+            return node.caracter; // quando terminar de varrer o codigo, retorna a letra que estava no node
         }
         char c = codigo.charAt(index); // mesmo metodo de cima ali
         if (c == '.') {
@@ -67,14 +67,14 @@ public class ArvoreMorse {
     // metodo para codificar com recursividade
     public String codificar(char letra) {
 
-        return codificarRec(raiz, letra, "");
+        return codificarRec(inicio, letra, "");
     }
 
     private String codificarRec(NoMorse node, char letra, String caminho) {
         if (node == null) {
             return null; // para indicar que nesse caminho não tem um no valido
         }
-        if (node.letra == letra) {
+        if (node.caracter == letra) {
             return caminho; // se a letra do node for igual a letra do param, retorna o caminho feito
         }
 
@@ -91,7 +91,7 @@ public class ArvoreMorse {
 
     // Altura da árvore
     public int getAltura() {
-        return getAlturaRec(raiz);
+        return getAlturaRec(inicio);
     }
 
     private int getAlturaRec(NoMorse node) {
@@ -105,14 +105,14 @@ public class ArvoreMorse {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
-        desenharNo(gc, raiz, canvas.getWidth() / 2, 40, canvas.getWidth() / 4);
+        desenharNo(gc, inicio, canvas.getWidth() / 2, 40, canvas.getWidth() / 4);
     }
 
     private void desenharNo(GraphicsContext gc, NoMorse node, double x, double y, double offset) {
         if (node == null) return;
 
         gc.strokeOval(x - 15, y - 15, 30, 30);
-        gc.strokeText(String.valueOf(node.letra), x - 5, y + 5);
+        gc.strokeText(String.valueOf(node.caracter), x - 5, y + 5);
 
         if (node.esquerda != null) {
             double newX = x - offset;
@@ -130,6 +130,6 @@ public class ArvoreMorse {
     }
 
     public boolean estaVazia() {
-        return raiz == null || (raiz.letra == ' ' && raiz.esquerda == null && raiz.direita == null);
+        return inicio == null || (inicio.caracter == ' ' && inicio.esquerda == null && inicio.direita == null);
     }
 }
